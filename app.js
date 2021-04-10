@@ -6,12 +6,12 @@ const puppeteer = require("puppeteer");
 
     const brower = await puppeteer.launch({ 
         headless: false ,
-        slowMoln: 25,
         defaultViewport: false});
 
     const page = await brower.newPage();
     await page.goto("https://typing-speed-test.aoeu.eu/");
     await page.waitForSelector(".nextword");
+   
     
     const words =  await page.evaluate(()=>{
         let wordlist=[document.querySelector(".currentword").innerText];
@@ -25,7 +25,15 @@ const puppeteer = require("puppeteer");
     });
   
 
-    await console.log(words);
+    // await console.log(words);
+    let finalresult;
+    for(let i in words){
+        await page.type("#input",words[i]);
+        await page.keyboard.press(String.fromCharCode(32));
+       
+    }
+
+
 
        
    } catch (error) {

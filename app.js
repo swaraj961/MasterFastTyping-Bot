@@ -1,16 +1,13 @@
-// Importing puppeteer      
 const puppeteer = require("puppeteer");
 
 (async()=>{
 
    try {
 
-    // Setting Browser properties 
     const brower = await puppeteer.launch({ 
         headless: false ,
         defaultViewport: false});
 
-    // Starting with a new page with provided url along with matching keyword 
     const page = await brower.newPage();
     await page.goto("https://typing-speed-test.aoeu.eu/");
     await page.waitForSelector(".nextword");

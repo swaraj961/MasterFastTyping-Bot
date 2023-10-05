@@ -27,7 +27,6 @@ const puppeteer = require("puppeteer");
         return wordlist;
     });
   
-
     // await console.log(words);
     let finalresult;
     for(let i in words){
@@ -35,9 +34,6 @@ const puppeteer = require("puppeteer");
         await page.keyboard.press(String.fromCharCode(32));
        
     }
-
-
-
        
    } catch (error) {
 

@@ -1,44 +1,37 @@
-// Importing puppeteer      
+// Importing puppeteer
 const puppeteer = require("puppeteer");
 
-(async()=>{
+(async () => {
+  try {
+    // Setting Browser properties
+    const brower = await puppeteer.launch({
+      headless: false,
+      defaultViewport: false,
+    });
 
-   try {
-
-    // Setting Browser properties 
-    const brower = await puppeteer.launch({ 
-        headless: false ,
-        defaultViewport: false});
-
-    // Starting with a new page with provided url along with matching keyword 
+    // Starting with a new page with provided url along with matching keyword
     const page = await brower.newPage();
     await page.goto("https://typing-speed-test.aoeu.eu/");
     await page.waitForSelector(".nextword");
-   
-    
-    const words =  await page.evaluate(()=>{
-        let wordlist=[document.querySelector(".currentword").innerText];
-        const eachword = document.querySelectorAll(".nextword")
 
-        eachword.forEach((word)=>{
-            wordlist.push(word.innerText);
-        });
+    const words = await page.evaluate(() => {
+      let wordlist = [document.querySelector(".currentword").innerText];
+      const eachword = document.querySelectorAll(".nextword");
 
-        return wordlist;
+      eachword.forEach((word) => {
+        wordlist.push(word.innerText);
+      });
+
+      return wordlist;
     });
-  
+
     // await console.log(words);
-    let finalresult;
-    for(let i in words){
-        await page.type("#input",words[i]);
-        await page.keyboard.press(String.fromCharCode(32));
-       
+
+    for (let i in words) {
+      await page.type("#input", words[i]);
+      await page.keyboard.press(String.fromCharCode(32));
     }
-       
-   } catch (error) {
-
+  } catch (error) {
     console.log(error);
-       
-   }
-
+  }
 })();
